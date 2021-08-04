@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>For the web is dark and full of terrors...</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <form action="http://localhost:5000/" method="POST" id="searchForm">
+        <label for="url_input">URL</label>
+        <input type="text" id="url_input" name="url_input">
+        <input type="submit" value="Catch em all!">
+    </form>
+
+    <p id="display"></p>
+
+    <script>
+        // Attach a submit handler to the form
+        $("#searchForm").submit(function(event) {
+
+            // Stop form from submitting normally
+            event.preventDefault();
+
+            // Get some values from elements on the page:
+            var $form = $(this),
+                term = $form.find("input[ name='url_input']").val(),
+                url = $form.attr("action");
+
+
+            // Send the data using post
+            var posting = $.post(url, {
+                url_input: term
+            });
+
+            // Put the results in a div
+            posting.done(function(data) {
+                var content = $(data);
+                $("#display").empty().append(content);
+            });
+        });
+    </script>
+</body>
+
+</html>
